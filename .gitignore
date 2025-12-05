@@ -1,0 +1,22 @@
+.env
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+venv/
+env/
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/cache/
+
+# IDE
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python
+*.egg-info/
+dist/
+build/
