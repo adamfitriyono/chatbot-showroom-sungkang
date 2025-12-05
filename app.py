@@ -135,72 +135,87 @@ if prompt := st.chat_input("Tanya tentang mobil, harga, promo, dll..."):
 
 # Tombol aksi cepat
 st.markdown("---")
-st.markdown("**⭐ Pertanyaan Cepat:**")
+st.markdown("**Pertanyaan Cepat:**")
 col1, col2, col3, col4 = st.columns(4)
+
+# Inisialisasi quick_action flag di session state
+if "quick_action_processed" not in st.session_state:
+    st.session_state.quick_action_processed = False
 
 with col1:
     if st.button("📋 Daftar Mobil", use_container_width=True, key="btn_daftar"):
-        user_input = "Apa saja daftar mobil yang tersedia?"
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Generate response secara langsung
-        with st.spinner("Generating..."):
-            response = get_response_from_gemini(
-                user_input,
-                st.session_state.showroom_data,
-                st.session_state.messages[:-1]
-            )
-        
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.rerun()
+        if not st.session_state.quick_action_processed:
+            st.session_state.quick_action_processed = True
+            user_input = "Apa saja daftar mobil yang tersedia?"
+            st.session_state.messages.append({"role": "user", "content": user_input})
+            
+            # Generate response secara langsung
+            with st.spinner("Generating..."):
+                response = get_response_from_gemini(
+                    user_input,
+                    st.session_state.showroom_data,
+                    st.session_state.messages[:-1]
+                )
+            
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            st.rerun()
 
 with col2:
     if st.button("🎁 Promo", use_container_width=True, key="btn_promo"):
-        user_input = "Apa promo terbaru bulan ini?"
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Generate response secara langsung
-        with st.spinner("Generating..."):
-            response = get_response_from_gemini(
-                user_input,
-                st.session_state.showroom_data,
-                st.session_state.messages[:-1]
-            )
-        
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.rerun()
+        if not st.session_state.quick_action_processed:
+            st.session_state.quick_action_processed = True
+            user_input = "Apa promo terbaru bulan ini?"
+            st.session_state.messages.append({"role": "user", "content": user_input})
+            
+            # Generate response secara langsung
+            with st.spinner("Generating..."):
+                response = get_response_from_gemini(
+                    user_input,
+                    st.session_state.showroom_data,
+                    st.session_state.messages[:-1]
+                )
+            
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            st.rerun()
 
 with col3:
     if st.button("🕐 Jam Buka", use_container_width=True, key="btn_jam"):
-        user_input = "Berapa jam operasional showroom?"
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Generate response secara langsung
-        with st.spinner("Generating..."):
-            response = get_response_from_gemini(
-                user_input,
-                st.session_state.showroom_data,
-                st.session_state.messages[:-1]
-            )
-        
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.rerun()
+        if not st.session_state.quick_action_processed:
+            st.session_state.quick_action_processed = True
+            user_input = "Berapa jam operasional showroom?"
+            st.session_state.messages.append({"role": "user", "content": user_input})
+            
+            # Generate response secara langsung
+            with st.spinner("Generating..."):
+                response = get_response_from_gemini(
+                    user_input,
+                    st.session_state.showroom_data,
+                    st.session_state.messages[:-1]
+                )
+            
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            st.rerun()
 
 with col4:
     if st.button("✉️ Kontak", use_container_width=True, key="btn_kontak"):
-        user_input = "Bagaimana cara menghubungi showroom?"
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Generate response secara langsung
-        with st.spinner("Generating..."):
-            response = get_response_from_gemini(
-                user_input,
-                st.session_state.showroom_data,
-                st.session_state.messages[:-1]
-            )
-        
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.rerun()
+        if not st.session_state.quick_action_processed:
+            st.session_state.quick_action_processed = True
+            user_input = "Bagaimana cara menghubungi showroom?"
+            st.session_state.messages.append({"role": "user", "content": user_input})
+            
+            # Generate response secara langsung
+            with st.spinner("Generating..."):
+                response = get_response_from_gemini(
+                    user_input,
+                    st.session_state.showroom_data,
+                    st.session_state.messages[:-1]
+                )
+            
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            st.rerun()
+
+# Reset flag setelah rendering
+st.session_state.quick_action_processed = False
 
 # Footer
 st.markdown("---")
