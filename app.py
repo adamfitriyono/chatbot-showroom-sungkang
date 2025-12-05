@@ -57,15 +57,17 @@ st.markdown("""
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
         }
+        .header-container h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: bold;
+            color: white !important;
+        }
         .header-text h1 {
             margin: 0;
             font-size: 24px;
             font-weight: 600;
-        }
-        .header-text p {
-            margin: 5px 0 0 0;
-            font-size: 12px;
-            opacity: 0.9;
+            color: white !important;
         }
         .status-badge {
             display: inline-block;
