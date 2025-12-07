@@ -1,10 +1,10 @@
 # 🚗 Chatbot Showroom Mobil Sungkang
 
-Chatbot AI customer service untuk Showroom Mobil Sungkang menggunakan **Google Gemini 2.0 Flash API** dan **Streamlit**. Fitur chat interaktif, informasi mobil lengkap, promo, dan informasi layanan lainnya.
+Chatbot AI customer service untuk Showroom Mobil Sungkang menggunakan **Google Gemini API** dan **Streamlit**. Fitur chat interaktif, informasi mobil lengkap, promo, dan informasi layanan lainnya.
 
 ## Fitur Utama
 
-- **Chatbot Interaktif AI**: Percakapan natural dengan Gemini 2.0 Flash yang memahami konteks showroom
+- **Chatbot Interaktif AI**: Percakapan natural dengan Google Gemini API yang memahami konteks showroom
 - 🚗 **Katalog Lengkap**: 20 mobil dengan harga, spesifikasi, kategori, dan warna pilihan
 - 🎁 **Promo Aktif**: 5 penawaran spesial (diskon, asuransi gratis, DP 0%, trade-in, cicilan 0%)
 - 💳 **Paket Pembiayaan**: 5 pilihan tenor cicilan (12, 24, 36, 48, 60 bulan)
@@ -18,13 +18,13 @@ Chatbot AI customer service untuk Showroom Mobil Sungkang menggunakan **Google G
 
 ## 🛠️ Tech Stack
 
-| Komponen     | Versi                     | Deskripsi                            |
-| ------------ | ------------------------- | ------------------------------------ |
-| **Frontend** | Streamlit 1.28.0          | Web framework untuk UI interaktif    |
-| **AI Model** | Gemini 2.0 Flash          | Model terbaru & tercepat dari Google |
-| **Language** | Python 3.10+              | Backend logic & API integration      |
-| **API**      | google-generativeai 0.3.0 | Google Generative AI SDK             |
-| **Tools**    | python-dotenv, requests   | Environment & HTTP utilities         |
+| Komponen     | Versi                     | Deskripsi                         |
+| ------------ | ------------------------- | --------------------------------- |
+| **Frontend** | Streamlit 1.28.0          | Web framework untuk UI interaktif |
+| **AI Model** | Gemini API Key            | Model dari Google                 |
+| **Language** | Python 3.10+              | Backend logic & API integration   |
+| **API**      | google-generativeai 0.3.0 | Google Generative AI SDK          |
+| **Tools**    | python-dotenv, requests   | Environment & HTTP utilities      |
 
 ## 📋 Persyaratan Sistem
 
@@ -109,8 +109,6 @@ chatbot-sungkang/
 └── README.md                # Dokumentasi project
 ```
 
-## 📖 File Penjelasan Detail
-
 ### **app.py**
 
 ```
@@ -156,7 +154,7 @@ Functions:
   - format_kontak() - Display contact info
   - create_system_prompt() - Build Gemini context
   - get_response_from_gemini() - Call Gemini API
-Model: Gemini 2.0 Flash (optimized, no fallback)
+Model: Gemini (fallback)
 Error Handling: Auth, quota, model availability, safety filters
 Comments: Bahasa Indonesia
 ```
@@ -196,7 +194,7 @@ def create_system_prompt(showroom_data):
 
 ### Ubah Theme/Styling
 
-Edit `app.py` - CSS section (lines 29-82):
+Edit `app.py` - CSS section:
 
 ```python
 css = """
@@ -288,13 +286,6 @@ Solusi:
 | **Mobil**       | 20 pilihan (Toyota, Honda, Daihatsu, Isuzu, Mitsubishi, dsb) |
 | **Harga Range** | Rp 139 Juta - Rp 530 Juta                                    |
 
-## 🔐 Security Best Practices
-
-- API Key di `.env` & `.streamlit/secrets.toml` (tidak di code)
-- `.gitignore` protects sensitive files
-- Tidak ada hardcoded credentials
-- Environment-based configuration
-
 ⚠️ **Yang Harus Diperhatikan:**
 
 - Jangan share API Key kepada siapapun
@@ -320,7 +311,7 @@ Project: Chatbot Showroom Mobil Sungkang
 Version: 1.0.0
 Python: 3.10+
 Streamlit: 1.28.0
-Gemini Model: 2.0 Flash
+Gemini Multi-model
 ```
 
 ## 👨‍💻 Author
