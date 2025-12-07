@@ -2,6 +2,9 @@
 
 Chatbot AI customer service untuk Showroom Mobil Sungkang menggunakan **Google Gemini API** dan **Streamlit**. Fitur chat interaktif, informasi mobil lengkap, promo, dan informasi layanan lainnya.
 
+## 🌐 Open the Project
+https://showroomsungkang.streamlit.app/
+
 ## Fitur Utama
 
 - **Chatbot Interaktif AI**: Percakapan natural dengan Google Gemini API yang memahami konteks showroom
