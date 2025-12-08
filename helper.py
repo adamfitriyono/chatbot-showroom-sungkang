@@ -7,14 +7,14 @@ from typing import List, Dict, Any, Tuple
 
 # Daftar model Gemini (fallback)
 GEMINI_MODELS = [
-    'gemini-2.0-flash',
-    'gemini-2.0-flash-lite',
     'gemini-2.5-flash',
     'gemini-2.5-flash-lite',
     'gemini-2.5-pro',
     'gemini-3-pro',
     'gemini-1.5-pro',
     'gemini-1.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-lite',
 ]
 
 def format_currency(amount: int) -> str:
@@ -197,13 +197,12 @@ LAYANAN:
 {', '.join(showroom_data['layanan'])}
 
 PETUNJUK:
-1. Jawab pertanyaan customer dengan ramah dan profesional
-2. Gunakan informasi di atas sebagai referensi
-3. Tawarkan test drive gratis jika customer tertarik
+1. Jawab singkat dan informatif (maksimal 3-5 point penting)
+2. Hindari penjelasan panjang yang tidak perlu
+3. Jika menggunakan list atau angka, tampilkan hanya TOP 5-10 paling relevan
 4. Jika ada pertanyaan khusus, sarankan customer untuk menghubungi showroom
 5. Selalu berakhir dengan ajakan untuk menghubungi atau berkunjung
-6. Gunakan Bahasa Indonesia yang baik dan sopan
-7. Berikan jawaban yang detail, ramah, dan helpful
+6. Gunakan Bahasa Indonesia yang baik dan gunakan emoji yang relevan
 """
     
     return prompt
@@ -219,19 +218,19 @@ def get_safety_settings() -> List[Dict]:
     return [
         {
             "category": genai.types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-            "threshold": genai.types.HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
         },
         {
             "category": genai.types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            "threshold": genai.types.HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
         },
         {
             "category": genai.types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-            "threshold": genai.types.HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
         },
         {
             "category": genai.types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-            "threshold": genai.types.HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
         },
     ]
 
@@ -261,7 +260,7 @@ def try_gemini_model(model_name: str, prompt: str, showroom_data: Dict) -> Tuple
         response = model.generate_content(
             prompt,
             generation_config=genai.types.GenerationConfig(
-                max_output_tokens=1000,
+                max_output_tokens=3000,
                 temperature=0.7,
                 top_p=0.95,
             )

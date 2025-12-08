@@ -116,7 +116,7 @@ if prompt := st.chat_input("Tanya tentang mobil, harga, promo, dll..."):
     
     # Generate response
     with st.chat_message("assistant"):
-        with st.spinner("Generating..."):
+        with st.spinner("Tunggu ya..."):
             print(f"[DEBUG] Pesan user: {prompt}")
             
             # Dapatkan response dari Gemini dengan konteks showroom
@@ -150,7 +150,7 @@ with col1:
             st.session_state.messages.append({"role": "user", "content": user_input})
             
             # Generate response secara langsung
-            with st.spinner("Generating..."):
+            with st.spinner("Tunggu ya..."):
                 response = get_response_from_gemini(
                     user_input,
                     st.session_state.showroom_data,
@@ -168,7 +168,7 @@ with col2:
             st.session_state.messages.append({"role": "user", "content": user_input})
             
             # Generate response secara langsung
-            with st.spinner("Generating..."):
+            with st.spinner("Tunggu ya..."):
                 response = get_response_from_gemini(
                     user_input,
                     st.session_state.showroom_data,
@@ -186,7 +186,7 @@ with col3:
             st.session_state.messages.append({"role": "user", "content": user_input})
             
             # Generate response secara langsung
-            with st.spinner("Generating..."):
+            with st.spinner("Tunggu ya..."):
                 response = get_response_from_gemini(
                     user_input,
                     st.session_state.showroom_data,
@@ -204,7 +204,7 @@ with col4:
             st.session_state.messages.append({"role": "user", "content": user_input})
             
             # Generate response secara langsung
-            with st.spinner("Generating..."):
+            with st.spinner("Tunggu ya..."):
                 response = get_response_from_gemini(
                     user_input,
                     st.session_state.showroom_data,
