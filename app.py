@@ -24,9 +24,83 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Font Awesome CDN
+st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+""", unsafe_allow_html=True)
+
 # CSS custom
 st.markdown("""
     <style>
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(17, 119, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(17, 119, 255, 0.4);
+            }
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(76, 175, 80, 0.5), 0 0 20px rgba(76, 175, 80, 0.3), 0 2px 6px rgba(76, 175, 80, 0.2);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 30px rgba(76, 175, 80, 0.5), 0 2px 10px rgba(76, 175, 80, 0.4);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes dotBlink {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+        
+        @keyframes badgeGlow {
+            0%, 100% {
+                background-color: #4CAF50;
+            }
+            50% {
+                background-color: #66BB6A;
+            }
+        }
         .stChatMessage {
             border-radius: 12px;
             padding: 12px 16px;
@@ -34,34 +108,80 @@ st.markdown("""
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         }
         
-        /* Pesan user - tema Purple/Blue */
+        /* Pesan user - tema Blue */
         .stChatMessage:has(> div > .stMarkdown) {
             background-color: #f0f2f6;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #1177FF;
         }
         
-        /* Pesan bot - tema light dengan accent */
+        /* Pesan bot - tema light dengan accent biru */
         .stChatMessage[data-testid="stChatMessage"]:has(.stMarkdown:contains('Bot')) {
             background-color: #e8f0f8;
-            border-left: 4px solid #764ba2;
+            border-left: 4px solid #0d5fcc;
         }
         
         .header-container {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
+            flex-direction: column;
+            padding: 24px 28px;
+            background: linear-gradient(135deg, #1177FF 0%, #2a8fff 25%, #0d5fcc 50%, #1177FF 75%, #0d5fcc 100%);
+            background-size: 200% 200%;
+            border-radius: 12px;
             color: white;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 4px 12px rgba(17, 119, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 8s ease infinite, pulse 3s ease-in-out infinite;
+        }
+        
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        .header-icon {
+            font-size: 48px;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            margin-right: 18px;
+            animation: iconFloat 3s ease-in-out infinite;
+            display: inline-block;
+            flex-shrink: 0;
         }
         .header-container h1 {
             margin: 0;
             font-size: 42px;
             font-weight: bold;
             color: white !important;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            line-height: 1.2;
+            margin-bottom: 0;
+        }
+        
+        .header-container > div {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        .header-container p {
+            margin: 12px 0 0 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.5;
         }
         .header-text h1 {
             margin: 0;
@@ -70,14 +190,81 @@ st.markdown("""
             color: white !important;
         }
         .status-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background-color: #4CAF50;
             color: white;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: bold;
-            box-shadow: 0 2px 6px rgba(76, 175, 80, 0.2);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5), 0 0 20px rgba(76, 175, 80, 0.3), 0 2px 6px rgba(76, 175, 80, 0.2);
+            animation: badgePulse 2s ease-in-out infinite, badgeGlow 2s ease-in-out infinite;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            display: inline-block;
+            animation: dotBlink 1.5s ease-in-out infinite;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+        
+        .header-helper-text {
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+        
+        .footer-container {
+            background: linear-gradient(135deg, #18202F 0%, #1f2a3f 100%);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-top: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .footer-container p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .footer-container .footer-line-1 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-container .footer-separator {
+            width: 70%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            margin: 12px auto;
+        }
+        
+        .footer-container .footer-line-2 {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 12px;
+        }
+        
+        .footer-icon {
+            font-size: 14px;
+            margin-right: 4px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -95,8 +282,8 @@ if "showroom_data" not in st.session_state:
 st.markdown("""
     <div class="header-container">
         <div>
-            <h1>🚗 Showroom Mobil Sungkang</h1>
-            <p><span class="status-badge">● Online</span> - Siap membantu Anda</p>
+            <h1><i class="fas fa-car-side header-icon"></i> Showroom Mobil Sungkang</h1>
+            <p><span class="status-badge">Online</span><span class="header-helper-text">Siap membantu Anda</span></p>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -218,10 +405,16 @@ with col4:
 st.session_state.quick_action_processed = False
 
 # Footer
-st.markdown("---")
 st.markdown("""
-    <div style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
-        <p>⚙️ Powered by Google Gemini | Showroom Mobil Sungkang</p>
-        <p>📍 Jl. Gatot Subroto No. 45, Semarang | WhatsApp: +62 812-3456-7890</p>
+    <div class="footer-container">
+        <p class="footer-line-1">
+            <span><i class="fas fa-map-marker-alt footer-icon"></i> Jl. Gatot Subroto No. 45, Semarang</span>
+            <span>|</span>
+            <span><i class="fas fa-robot footer-icon"></i> Powered by Google Gemini</span>
+        </p>
+        <div class="footer-separator"></div>
+        <p class="footer-line-2">
+            @2025 Showroom Mobil Sungkang. All rights reserved.
+        </p>
     </div>
 """, unsafe_allow_html=True)

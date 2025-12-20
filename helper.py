@@ -11,10 +11,6 @@ GEMINI_MODELS = [
     'gemini-2.5-flash-lite',
     'gemini-2.5-pro',
     'gemini-3-pro',
-    'gemini-1.5-pro',
-    'gemini-1.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.0-flash-lite',
 ]
 
 def format_currency(amount: int) -> str:
@@ -347,28 +343,20 @@ def get_response_from_gemini(user_message: str, showroom_data: Dict, conversatio
         print("[DEBUG] ❌ Semua model gagal dicoba!")
         print("="*80 + "\n")
         
-        return f"""❌ **Maaf, semua model Gemini sedang tidak tersedia.**
+        return f"""😔 **Maaf, layanan chatbot sedang tidak dapat diakses.**
 
-📌 **Informasi Teknis:**
-- Sudah mencoba {len(GEMINI_MODELS)} model berbeda
-- Semua model mengalami error
+**Yang terjadi:** Sistem tidak dapat memproses pertanyaan Anda saat ini.
 
-**Kemungkinan penyebab:**
-1. ⚠️ API Key tidak valid atau sudah expired
-2. 🔒 Quota API sudah habis
-3. 🌐 Masalah koneksi internet
-4. 🔧 Maintenance di server Google
+**Yang bisa Anda lakukan:**
+1. ⏳ Tunggu beberapa saat dan coba lagi
+2. 🔄 Refresh halaman browser Anda
+3. 🌐 Pastikan koneksi internet Anda stabil
 
-**Solusi:**
-1. Verifikasi API Key: https://makersuite.google.com/app/apikey
-2. Check quota usage di Google Cloud Console
-3. Coba lagi dalam beberapa saat
+Jika masalah berlanjut, silakan hubungi kami langsung:
+📱 WhatsApp: {showroom_data['whatsapp']}
+📧 Email: {showroom_data['email']}
 
-📞 **Hubungi support kami:**
-- WhatsApp: {showroom_data['whatsapp']}
-- Email: {showroom_data['email']}
-
-Tim kami siap membantu! 🚗"""
+Kami siap membantu Anda! 🚗"""
     
     except Exception as e:
         error_type = type(e).__name__
@@ -379,110 +367,80 @@ Tim kami siap membantu! 🚗"""
         
         # Detect specific error types dan berikan response yang sesuai
         if "api_key" in error_msg.lower() or "authentication" in error_msg.lower() or "invalid" in error_msg.lower() or "unauthorized" in error_msg.lower():
-            return f"""❌ **Authentication Error - API Key Problem**
+            return f"""😔 **Maaf, layanan chatbot sedang mengalami masalah teknis.**
 
-**Pesan Error:**
-{error_msg[:300]}
+**Yang terjadi:** Sistem tidak dapat terhubung dengan layanan AI saat ini.
 
-**Penyebab kemungkinan:**
-- API Key tidak valid
-- API Key sudah expired
-- API Key direvoke
-- API Key belum activated
+**Yang bisa Anda lakukan:**
+1. ⏳ Tunggu beberapa saat dan coba lagi
+2. 🔄 Refresh halaman browser Anda
 
-**Solusi:**
-1. Buka: https://makersuite.google.com/app/apikey
-2. Regenerate API Key baru
-3. Update di Streamlit Cloud Secrets
-4. Refresh aplikasi
+Jika masalah berlanjut, silakan hubungi kami:
+📱 WhatsApp: {showroom_data['whatsapp']}
+📧 Email: {showroom_data['email']}
 
-📞 **Hubungi support:**
-WhatsApp: {showroom_data['whatsapp']}
-Email: {showroom_data['email']}"""
+Kami akan segera memperbaikinya! 🚗"""
         
         elif "quota" in error_msg.lower() or "rate limit" in error_msg.lower() or "too many" in error_msg.lower() or "resource exhausted" in error_msg.lower():
-            return f"""⚠️ **Quota/Rate Limit Error**
+            return f"""⏳ **Layanan chatbot sedang sibuk.**
 
-**Pesan Error:**
-{error_msg[:300]}
+**Yang terjadi:** Terlalu banyak pengguna yang menggunakan layanan ini secara bersamaan.
 
-**Penyebab:**
-- Terlalu banyak request dalam waktu singkat
-- Quota API sudah habis bulan ini
-- Rate limit terlampaui
+**Yang bisa Anda lakukan:**
+1. ⏰ Tunggu 30 detik - 1 menit, lalu coba lagi
+2. 🔄 Refresh halaman dan kirim ulang pertanyaan Anda
 
-**Solusi:**
-1. ⏳ Tunggu beberapa saat (30 detik - 1 menit)
-2. 🔄 Coba lagi dengan pertanyaan yang lebih sederhana
-3. 📊 Check quota: https://console.cloud.google.com/apis
+Atau, jika pertanyaan Anda mendesak, silakan hubungi kami langsung:
+📱 WhatsApp: {showroom_data['whatsapp']}
 
-💡 **Tips:**
-- Batasi panjang percakapan
-- Hindari pertanyaan yang terlalu kompleks
-- Coba lagi di jam yang berbeda
-
-📞 **Hubungi support:**
-WhatsApp: {showroom_data['whatsapp']}"""
+Kami siap membantu Anda! 🚗"""
         
         elif "not found" in error_msg.lower() or "404" in error_msg or "does not exist" in error_msg.lower() or "model not found" in error_msg.lower():
-            return f"""❌ **Model Error - Model Tidak Tersedia**
+            return f"""😔 **Maaf, layanan chatbot sedang tidak tersedia.**
 
-**Pesan Error:**
-{error_msg[:300]}
+**Yang terjadi:** Sistem AI sedang mengalami gangguan teknis.
 
-**Penyebab:**
-- Model Gemini yang diminta tidak ada
-- Model belum dideploy di region Anda
-- Model sudah deprecated
+**Yang bisa Anda lakukan:**
+1. ⏳ Tunggu beberapa saat dan coba lagi
+2. 🔄 Refresh halaman browser Anda
 
-**Informasi Model:**
-Kami sudah mencoba 8 model Gemini terbaru
+Atau hubungi kami langsung untuk bantuan:
+📱 WhatsApp: {showroom_data['whatsapp']}
+📧 Email: {showroom_data['email']}
 
-📞 **Hubungi support:**
-Email: {showroom_data['email']}
-WhatsApp: {showroom_data['whatsapp']}"""
+Kami akan segera memperbaikinya! 🚗"""
         
         elif "blocked" in error_msg.lower() or "safety" in error_msg.lower():
-            return f"""⚠️ **Safety Filter - Response Diblokir**
+            return f"""🤔 **Pertanyaan Anda tidak dapat diproses.**
 
-**Pesan Error:**
-{error_msg[:300]}
+**Yang terjadi:** Sistem tidak dapat memahami atau memproses pertanyaan Anda.
 
-**Penyebab:**
-Response atau pertanyaan Anda diblokir oleh safety filter Gemini untuk keamanan.
+**Yang bisa Anda lakukan:**
+1. 📝 Coba tanyakan dengan kata-kata yang berbeda
+2. 🎯 Fokus pada pertanyaan tentang mobil, harga, promo, atau layanan kami
+3. 💬 Gunakan bahasa yang lebih sederhana dan jelas
 
-**Solusi:**
-1. 📝 Coba dengan pertanyaan yang berbeda
-2. 🎯 Hindari topik sensitif
-3. 📞 Hubungi support jika ini adalah pertanyaan legitimate
-
-💡 **Contoh pertanyaan yang aman:**
+**Contoh pertanyaan yang bisa ditanyakan:**
 - "Berapa harga Toyota Avanza?"
 - "Ada promo apa bulan ini?"
 - "Jam operasional showroom?"
+- "Bagaimana cara menghubungi showroom?"
 
-📞 **Hubungi support:**
-WhatsApp: {showroom_data['whatsapp']}"""
+Jika masih mengalami masalah, hubungi kami:
+📱 WhatsApp: {showroom_data['whatsapp']}"""
         
         else:
-            return f"""❌ **Terjadi Error Tak Terduga**
+            return f"""😔 **Maaf, terjadi kesalahan saat memproses pertanyaan Anda.**
 
-**Tipe Error:** {error_type}
+**Yang terjadi:** Sistem mengalami gangguan saat ini.
 
-**Pesan Error:**
-{error_msg[:300]}
-
-**Kemungkinan Penyebab:**
-- Masalah koneksi internet
-- Maintenance server Google
-- Bug di sistem
-- Konfigurasi salah
-
-**Solusi Umum:**
-1. 🔄 Refresh halaman aplikasi
-2. 🌐 Check koneksi internet Anda
+**Yang bisa Anda lakukan:**
+1. 🔄 Refresh halaman browser Anda
+2. 🌐 Pastikan koneksi internet Anda stabil
 3. ⏳ Tunggu 1-2 menit dan coba lagi
 
-📞 **Hubungi support jika error berlanjut:**
-Email: {showroom_data['email']}
-WhatsApp: {showroom_data['whatsapp']}"""
+Jika masalah berlanjut, silakan hubungi kami langsung:
+📱 WhatsApp: {showroom_data['whatsapp']}
+📧 Email: {showroom_data['email']}
+
+Kami akan segera membantu Anda! 🚗"""
